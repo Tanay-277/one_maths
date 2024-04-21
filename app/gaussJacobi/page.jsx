@@ -3,9 +3,15 @@ import { useState } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 
 const GaussJacobi = () => {
+
+    const config = {
+        loader: { load: ["input/asciimath"] }
+    };
+
     const temp = ["x + 2y + 3z = 6", "2x + 3y + z = 4", "3x + y + 2z = 2"];
     const [numOfEquations, setNumOfEquations] = useState(temp.length);
     const [equations, setEquations] = useState(temp);
+    const [numOfIterations, setNumOfIterations] = useState(3);
     const [coefficients, setCoefficients] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
     const [initialValues, setInitialValues] = useState([0, 0, 0]);
     const [presicion, setPresicion] = useState(0.0001);
@@ -18,6 +24,7 @@ const GaussJacobi = () => {
         setEquations([]);
         setInitialValues([]);
         setResult([]);
+        setNumOfIterations(e.target.value);
         setError("");
     }
 
@@ -82,6 +89,9 @@ const GaussJacobi = () => {
     };
 
 
+    const handleNumOfIterations = (e) => {
+        setNumOfIterations(e.target.value);
+    }
 
     const handleInitialValues = (e) => {
         setInitialValues(e.target.value.split(","));
@@ -90,6 +100,7 @@ const GaussJacobi = () => {
     const handlePresicion = (e) => {
         setPresicion(e.target.value);
     }
+
 
 
     const handleSubmit = () => {
@@ -129,6 +140,11 @@ const GaussJacobi = () => {
             </div>
             <div>
 
+                <label>Number Of Iterations:</label>
+                <input type="number" value={numOfIterations} onChange={handleNumOfIterations} />
+            </div>
+            <div>
+
                 <label>Initial values:</label>
                 <input type="text" value={initialValues} onChange={handleInitialValues} />
             </div>
@@ -142,24 +158,58 @@ const GaussJacobi = () => {
 
             <>
                 <h3>Solution</h3>
-                <MathJaxContext>
+                <MathJaxContext config={config}>
                     {
                         equations.map((equation, index) => (
                             <MathJax key={index}>{equation}</MathJax>
                         ))
                     }
                     {
-                        Array.from({ length: numOfEquations }, (_, i) => (
-                            <p key={i}>
-                                {
-                                    `x = (${coefficients[i][3]} - ${coefficients[i][1]}y - ${coefficients[i][2]}z) / ${coefficients[i][0]}`
-                                }
-                            </p>
-                        ))
+                        <>
+                            <MathJax className="mt-2">{"`" +
+                                `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
+                                "`"}
+                            </MathJax>
+                            <MathJax className="mt-2">{"`" +
+                                `y = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x - ${coefficients[1][2]}z}{${coefficients[1][1]}}` +
+                                "`"}
+                            </MathJax>
+                            <MathJax className="mt-2">{"`" +
+                                `z = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x - ${coefficients[2][1]}y}{${coefficients[2][2]}}` +
+                                "`"}
+                            </MathJax>
+                        </>
                     }
-
-
-
+                </MathJaxContext>
+                <MathJaxContext config={config}>
+                    <h3 className="mt-6">
+                        Initially, x = {initialValues[0]},
+                        y = {initialValues[1]},
+                        z = {initialValues[2]}
+                    </h3>
+                    {Array.from({ length: numOfIterations }, (_, i) => (
+                        <div key={i}>
+                            <h3>Iteration-{i + 1}</h3>
+                            <MathJax>
+                                {"`" + `
+                            x_{${i}} = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y_{${i}} - ${coefficients[0][2]}z_{${i}}}{${coefficients[0][0]}}
+                              = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}(${initialValues[1]}) - ${coefficients[0][2]}(${initialValues[2]})}{${coefficients[0][0]}} 
+                        `+ "`"}
+                            </MathJax>
+                            <MathJax>
+                                {"`" + `
+                            y_{${i}} = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x_{${i}} - ${coefficients[1][2]}z_{${i}}}{${coefficients[1][1]}}
+                                = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}(${initialValues[0]}) - ${coefficients[1][2]}(${initialValues[2]})}{${coefficients[1][1]}}
+                        `+ "`"}
+                            </MathJax>
+                            <MathJax>
+                                {"`" + `
+                            z_{${i}} = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x_{${i}} - ${coefficients[2][1]}y_{${i}}}{${coefficients[2][2]}}
+                            = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}(${initialValues[0]}) - ${coefficients[2][1]}(${initialValues[1]})}{${coefficients[2][2]}}
+                        `+ "`"}
+                            </MathJax>
+                        </div>
+                    ))}
                 </MathJaxContext>
             </>
             {/* } */}
