@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
+import IterationBox from "@/components/IterationBox";
 
 const GaussJacobi = () => {
 
@@ -14,7 +15,7 @@ const GaussJacobi = () => {
     const [numOfIterations, setNumOfIterations] = useState(3);
     const [coefficients, setCoefficients] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
     const [initialValues, setInitialValues] = useState([0, 0, 0]);
-    const [presicion, setPresicion] = useState(0.0001);
+    const [presicion, setPresicion] = useState(4);
     const [result, setResult] = useState([]);
     const [showResult, setShowResult] = useState(false);
     const [error, setError] = useState("");
@@ -75,7 +76,6 @@ const GaussJacobi = () => {
             }
         });
 
-        // Ensure the constant term is negative
         if (newCoefficients[3] > 0) {
             newCoefficients[3] = -newCoefficients[3];
         }
@@ -87,7 +87,6 @@ const GaussJacobi = () => {
             return newCoefficientsArray;
         });
     };
-
 
     const handleNumOfIterations = (e) => {
         setNumOfIterations(e.target.value);
@@ -101,11 +100,7 @@ const GaussJacobi = () => {
         setPresicion(e.target.value);
     }
 
-
-
     const handleSubmit = () => {
-
-        // reset everything
         setResult([]);
         setError("");
         setCoefficients([0, 0, 0, 0]);
@@ -182,34 +177,12 @@ const GaussJacobi = () => {
                     }
                 </MathJaxContext>
                 <MathJaxContext config={config}>
-                    <h3 className="mt-6">
-                        Initially, x = {initialValues[0]},
-                        y = {initialValues[1]},
-                        z = {initialValues[2]}
-                    </h3>
-                    {Array.from({ length: numOfIterations }, (_, i) => (
-                        <div key={i}>
-                            <h3>Iteration-{i + 1}</h3>
-                            <MathJax>
-                                {"`" + `
-                            x_{${i}} = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y_{${i}} - ${coefficients[0][2]}z_{${i}}}{${coefficients[0][0]}}
-                              = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}(${initialValues[1]}) - ${coefficients[0][2]}(${initialValues[2]})}{${coefficients[0][0]}} 
-                        `+ "`"}
-                            </MathJax>
-                            <MathJax>
-                                {"`" + `
-                            y_{${i}} = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x_{${i}} - ${coefficients[1][2]}z_{${i}}}{${coefficients[1][1]}}
-                                = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}(${initialValues[0]}) - ${coefficients[1][2]}(${initialValues[2]})}{${coefficients[1][1]}}
-                        `+ "`"}
-                            </MathJax>
-                            <MathJax>
-                                {"`" + `
-                            z_{${i}} = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x_{${i}} - ${coefficients[2][1]}y_{${i}}}{${coefficients[2][2]}}
-                            = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}(${initialValues[0]}) - ${coefficients[2][1]}(${initialValues[1]})}{${coefficients[2][2]}}
-                        `+ "`"}
-                            </MathJax>
-                        </div>
-                    ))}
+                    <IterationBox
+                        coefficients={coefficients}
+                        initialValues={initialValues}
+                        numOfIterations={numOfIterations}
+                        presicion={presicion}
+                    />
                 </MathJaxContext>
             </>
             {/* } */}
