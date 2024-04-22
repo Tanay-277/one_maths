@@ -12,14 +12,10 @@
   "dependencies": {
     "@google/generative-ai": "^0.7.1",
     "better-react-mathjax": "^2.0.3",
-    "bing-chat": "^0.2.3",
-    "chatgpt": "^5.2.5",
     "next": "^14.1.4",
-    "openai": "^4.38.1",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-markdown": "^9.0.1",
-    "react-mathjax": "^1.0.1",
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
