@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "deploy": "vercel --legacy-peer-deps" // Add the --legacy-peer-deps flag here
   },
   "dependencies": {
     "@google/generative-ai": "^0.7.1",
@@ -15,10 +16,10 @@
     "chatgpt": "^5.2.5",
     "next": "^14.1.4",
     "openai": "^4.38.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
     "react-markdown": "^9.0.1",
-    "react-mathjax": "^2.0.0",
+    "react-mathjax": "^1.0.1",
     "remark-gfm": "^4.0.0"
   },
   "devDependencies": {
