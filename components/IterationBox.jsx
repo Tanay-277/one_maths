@@ -4,7 +4,7 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
     let x = initialValues[0];
     let y = initialValues[1];
     let z = initialValues[2];
-    console.log(presicion);
+    // console.log(presicion);
 
     const iterations = [];
 
@@ -15,7 +15,7 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
 
         iterations.push(
             <div key={i}>
-                <h3>Iteration-{i + 1}</h3>
+                <h3 className="my-1">Iteration-{i + 1}</h3>
                 <MathJax className="my-2">
                     {"`" + `
                         x_{${i + 1}} = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y_{${i}} - ${coefficients[0][2]}z_{${i}}}{${coefficients[0][0]}}
@@ -48,19 +48,17 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
     return (
         <MathJax>
             <div>
-                <h3 className="mt-6">
+                <h3 className="mt-6 mb-2">
                     Initially, x<sub>0</sub> = {initialValues[0]},
                     y<sub>0</sub> = {initialValues[1]},
                     z<sub>0</sub> = {initialValues[2]}
                 </h3>
                 {iterations}
             </div>
-            {/* show result here */}
-            <p>
+            <p className="bg-slate-800 p-2 px-4 rounded-full w-1/2">
                 The solution is x = {x}, y = {y}, z = {z}
             </p>
-            {/* show a table for each variable and for each iteration */}
-            <table className="table-auto border border-collapse border-gray-400 my-6 mx-auto">
+            <table className="table-auto border border-collapse border-gray-400 my-6">
                 <thead>
                     <tr className="bg-gray-800">
                         <th className="border border-gray-400 px-4 py-2">Iteration</th>

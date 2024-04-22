@@ -1,3 +1,4 @@
+@import url(https://fonts.googleapis.com/css?family=Space+Grotesk:300,regular,500,600,700);
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,18 +13,22 @@ html {
   scroll-behavior: smooth;
 }
 
+.space {
+  font-family: "Space grotesk", monospace;
+}
 body {
   min-height: 100vh;
   background: #060c16;
   color: #ffffffa9;
 }
-
 input,
 textarea {
-  background: #000;
+  /* background: #000; */
   outline: none;
-  border: 0.1px solid rgba(255, 255, 255, 0.082);
   color: #ffffffa9;
+  padding: 8px 1em;
+  border-radius: 16px;
+  @apply my-2 w-full border-[0.1px] border-[#ffffff1a] bg-[#000000ad] hover:bg-[#00000071] accent-slate-950;
 }
 
 ::placeholder {
@@ -47,4 +52,21 @@ mjx-container [size="s"] {
 
 mjx-c {
   margin-right: 2px !important;
+}
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 2px;
+  background: #000;
+  padding: 2px;
+  border-left: 0.1px solid #ffffff28;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8490b1c7;
+}
+
+button {
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
 }

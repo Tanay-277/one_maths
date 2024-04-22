@@ -16,9 +16,9 @@ const GaussJacobi = () => {
     const [coefficients, setCoefficients] = useState([[0, 0, 0, 0], [0, 0, 0, 0], [0, 0, 0, 0]]);
     const [initialValues, setInitialValues] = useState([0, 0, 0]);
     const [presicion, setPresicion] = useState(4);
-    const [result, setResult] = useState([]);
-    const [showResult, setShowResult] = useState(false);
     const [error, setError] = useState("");
+    const [result, setResult] = useState([]);
+    const [showCalc, setShowCalc] = useState(true);
 
     const handleNumOfEquations = (e) => {
         setNumOfEquations(e.target.value);
@@ -80,7 +80,7 @@ const GaussJacobi = () => {
             newCoefficients[3] = -newCoefficients[3];
         }
 
-        console.log("coefficients = ", newCoefficients);
+        // console.log("coefficients = ", newCoefficients);
         setCoefficients(prevCoefficients => {
             const newCoefficientsArray = [...prevCoefficients];
             newCoefficientsArray[eqNum] = newCoefficients;
@@ -104,7 +104,6 @@ const GaussJacobi = () => {
         setResult([]);
         setError("");
         setCoefficients([0, 0, 0, 0]);
-        setShowResult(true);
 
 
         if (equations.length < numOfEquations) {
@@ -120,47 +119,78 @@ const GaussJacobi = () => {
         transformEquation(equations[1], 1);
         transformEquation(equations[2], 2);
     }
+
+    const handleReset = () => {
+        setNumOfEquations(1);
+        setEquations([]);
+        setInitialValues([]);
+        setPresicion(4);
+        setResult([]);
+        setShowResult(false);
+        setError("");
+        setNumOfIterations(0);
+        setCoefficients([0, 0, 0, 0]);
+        setPresicion(0);
+    }
+
     return (
         <>
-            <h1>Gauss Jacobi</h1>
-            <div>
-                <label>Number of equations:</label>
-                <input type="number" value={numOfEquations} onChange={handleNumOfEquations} />
-            </div>
-            <div>
-                <label>Equations:</label>
-                {Array.from({ length: numOfEquations }, (_, i) => (
-                    <input key={i} id={i} type="text" value={equations[i]} onChange={handleEquations} />
-                ))}
-            </div>
-            <div>
+            <div className="bg-black pt-4 pb-1 mx-10 rounded-b-[3rem]">
+                <h1 className="text-right text-6xl font-medium space text-[#ffffff8c] mr-6">Gauss Jacobi</h1>
+                <div className="hero flex gap-6 px-6 py- my-2">
+                    <div className="flex flex-col gap-4 w-1/2">
+                        <div>
+                            <label className="ml-2">Number of equations</label><br />
+                            <input type="number" value={numOfEquations} onChange={handleNumOfEquations} />
+                        </div>
+                        <div>
+                            <label className="ml-2">Equations</label>
+                            {Array.from({ length: numOfEquations }, (_, i) => (
+                                <div key={i}>
+                                    <input key={i} id={i} type="text" value={equations[i]} onChange={handleEquations} />
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                    <div className="flex gap-4 flex-col w-1/2 justify-between">
+                        <div>
+                            <label className="ml-2">Number Of Iterations</label><br />
+                            <input type="number" value={numOfIterations} onChange={handleNumOfIterations} />
+                        </div>
+                        <div>
 
-                <label>Number Of Iterations:</label>
-                <input type="number" value={numOfIterations} onChange={handleNumOfIterations} />
+                            <label className="ml-2">Initial values</label><br />
+                            <input type="text" value={initialValues} onChange={handleInitialValues} />
+                        </div>
+                        <div>
+                            <label className="ml-2">Presicion (Number of Digits after decimal)</label><br />
+                            <input type="number" value={presicion} onChange={handlePresicion} />
+                        </div>
+                    </div>
+                </div>
+                <div className="flex w-full items-center justify-center mt-2 px-6 gap-6">
+                    <button className="justify-center flex w-1/2 py-2 px-6 rounded-full border-[0.1px] border-[#ffffff1a] bg-[#00000054] hover:bg-[#00000012]" onClick={handleSubmit}>Solve</button>
+                    <button className="justify-center flex w-1/2 py-2 px-6 rounded-full border-[0.1px] border-[#ffffff1a] bg-[#00000054] hover:bg-[#e454d110]" onClick={handleReset}>Reset</button>
+                </div>
+                {/* show a btn with a down caret sign  */}
+                <div className="flex w-full items-center justify-center my-2 px-6">
+                    <button className="justify-center flex w-2/5 py-2 px-6 rounded-full  hover:bg-[#aad7f136]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 rotate-180">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
+                        </svg>
+                    </button>
+                </div>
             </div>
-            <div>
-
-                <label>Initial values:</label>
-                <input type="text" value={initialValues} onChange={handleInitialValues} />
-            </div>
-            <div>
-                <label>Presicion:</label>
-                <input type="number" value={presicion} onChange={handlePresicion} />
-            </div>
-            <button onClick={handleSubmit}>Submit</button>
-            {error && <p>{error}</p>}
-            {/* {showResult && */}
-
-            <>
-                <h3>Solution</h3>
-                <MathJaxContext config={config}>
-                    {
-                        equations.map((equation, index) => (
+            <div className="pt-4 my-4 mx-6">
+                <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
+                <div className="py-3 rounded-md text-lg">
+                    Given, <br />
+                    <MathJaxContext config={config}>
+                        {equations.map((equation, index) => (
                             <MathJax key={index}>{equation}</MathJax>
-                        ))
-                    }
-                    {
+                        ))}
                         <>
+                            <h3 className="mt-4">Therefore</h3>
                             <MathJax className="mt-2">{"`" +
                                 `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
                                 "`"}
@@ -174,17 +204,20 @@ const GaussJacobi = () => {
                                 "`"}
                             </MathJax>
                         </>
-                    }
-                </MathJaxContext>
-                <MathJaxContext config={config}>
-                    <IterationBox
-                        coefficients={coefficients}
-                        initialValues={initialValues}
-                        numOfIterations={numOfIterations}
-                        presicion={presicion}
-                    />
-                </MathJaxContext>
-            </>
+                    </MathJaxContext>
+                </div>
+                <div className="py-3 rounded-md mb-3 text-lg">
+                    <MathJaxContext config={config}>
+                        <IterationBox
+                            coefficients={coefficients}
+                            initialValues={initialValues}
+                            numOfIterations={numOfIterations}
+                            presicion={presicion}
+                        />
+                    </MathJaxContext>
+                </div>
+            </div>
+
             {/* } */}
         </>
     )

@@ -23,7 +23,6 @@ const EquationInput = () => {
 
     const transformEquations = () => {
         const coefficientsArray = equations.map(eq => {
-            // Assuming each equation is in the form ax + by + cz + ... = d
             const parts = eq.split(/[+=]/);
             const coefficients = parts[0].split(/(?=[-+])/).map(term => {
                 const coeff = parseFloat(term) || 1;
@@ -33,7 +32,7 @@ const EquationInput = () => {
             coefficients.push(constant);
             return coefficients;
         });
-        console.log(coefficientsArray);
+        // console.log(coefficientsArray);
     };
 
     return (
