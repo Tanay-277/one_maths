@@ -16,7 +16,7 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
         const newZ = parseFloat(((coefficients[2][3] - coefficients[2][0] * x - coefficients[2][1] * y) / coefficients[2][2]).toFixed(presicion));
 
         iterations.push(
-            <div key={i}>
+            <div key={i} className="my-6">
                 <h3 className="my-1">Iteration-{i + 1}</h3>
                 <MathJax className="my-2">
                     {"`" + `
@@ -59,7 +59,7 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
                 </h3>
                 {iterations}
             </div>
-            <p className="bg-slate-800 p-2 px-4 rounded-full w-1/2 " style={{ margin: '20px 0' }}>
+            <p className="underline p-2 px-4  w-full " style={{ margin: '20px 0' }}>
                 The solution is x = {x}, y = {y}, z = {z}
             </p>
             <table className="table-auto border border-collapse border-gray-700 my-6 rounded-md">

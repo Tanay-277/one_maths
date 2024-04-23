@@ -1,14 +1,12 @@
 "use client";
-import { useState,useEffect, use } from "react";
+import { useState, useEffect, use } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import IterationBox from "@/components/IterationBox";
 import { motion } from "framer-motion";
 
 const GaussJacobi = () => {
 
-    // set title to Gauss Jacobi
-    // document.title = "Gauss Jacobi";it says document is not defined
-    
+
     useEffect(() => {
         document.title = "Gauss Jacobi";
     }, []);
@@ -153,7 +151,7 @@ const GaussJacobi = () => {
             <div className="main pt-4 pb-1 mx-10 rounded-b-[3rem]">
                 <h1 className="text-right text-6xl font-medium space text-[#ffffff8c] mr-6 mb-2">Gauss Jacobi</h1>
                 <div className="hero flex gap-6 px-6 py- my-2">
-                    <div className="flex flex-col gap-4 w-1/2">
+                    <div className="flex flex-col gap-4 w-1/2 heroChild">
                         <div>
                             <label className="ml-2">Number of equations</label><br />
                             <input type="number" value={numOfEquations} onChange={handleNumOfEquations} />
@@ -167,7 +165,7 @@ const GaussJacobi = () => {
                             ))}
                         </div>
                     </div>
-                    <div className="flex gap-4 flex-col w-1/2 justify-between">
+                    <div className="flex gap-4 flex-col w-1/2 justify-between heroChild">
                         <div>
                             <label className="ml-2">Number Of Iterations</label><br />
                             <input type="number" value={numOfIterations} onChange={handleNumOfIterations} />
