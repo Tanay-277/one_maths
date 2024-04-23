@@ -38,7 +38,7 @@ textarea {
 }
 
 .MJX-TEX {
-  font-family: monospace !important;
+  font-family: jetbrains mono !important;
   font-size: 16px !important;
 }
 
@@ -104,8 +104,8 @@ button {
 }
 
 @media (max-width: 640px) {
-  .main{
+  .main {
     @apply mx-0 rounded-none;
   }
-  
+
 }
