@@ -6,6 +6,9 @@ import { motion } from "framer-motion";
 
 const GaussJacobi = () => {
 
+    // set title to Gauss Jacobi
+    document.title = "Gauss Jacobi";
+
     const config = {
         loader: { load: ["input/asciimath"] }
     };
