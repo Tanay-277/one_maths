@@ -1,5 +1,5 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState,useEffect, use } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import IterationBox from "@/components/IterationBox";
 import { motion } from "framer-motion";
@@ -7,7 +7,11 @@ import { motion } from "framer-motion";
 const GaussJacobi = () => {
 
     // set title to Gauss Jacobi
-    document.title = "Gauss Jacobi";
+    // document.title = "Gauss Jacobi";it says document is not defined
+    
+    useEffect(() => {
+        document.title = "Gauss Jacobi";
+    }, []);
 
     const config = {
         loader: { load: ["input/asciimath"] }
