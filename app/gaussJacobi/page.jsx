@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import IterationBox from "@/components/IterationBox";
 import { motion } from "framer-motion";
@@ -21,6 +21,7 @@ const GaussJacobi = () => {
     const [result, setResult] = useState([]);
     const [showCalc, setShowCalc] = useState(true);
     const [showSol, setShowSol] = useState(false);
+    const [mathJaxKey, setMathJaxKey] = useState(0);
 
     const handleNumOfEquations = (e) => {
         setNumOfEquations(e.target.value);
@@ -136,6 +137,10 @@ const GaussJacobi = () => {
         setPresicion(0);
     }
 
+    useEffect(() => {
+        setMathJaxKey(prevKey => prevKey + 1);
+    }, [equations, coefficients, initialValues, numOfIterations, presicion]);
+
     return (
         <>
             <div className="main pt-4 pb-1 mx-10 rounded-b-[3rem]">
@@ -188,7 +193,7 @@ const GaussJacobi = () => {
                     <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
                     <div className="py-3 rounded-md text-lg">
                         Given, <br />
-                        <MathJaxContext config={config}>
+                        <MathJaxContext config={config} key={mathJaxKey}>
                             {equations.map((equation, index) => (
                                 <MathJax key={index}>{equation}</MathJax>
                             ))}
@@ -210,7 +215,7 @@ const GaussJacobi = () => {
                         </MathJaxContext>
                     </div>
                     <div className="py-3 rounded-md mb-3 text-lg">
-                        <MathJaxContext config={config}>
+                        <MathJaxContext config={config} key={mathJaxKey}>
                             <IterationBox
                                 coefficients={coefficients}
                                 initialValues={initialValues}
