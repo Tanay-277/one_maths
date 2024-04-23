@@ -1,5 +1,5 @@
 "use client";
-import { useState, useEffect, use } from "react";
+import { useState, useEffect } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import IterationBox from "@/components/IterationBox";
 import { motion } from "framer-motion";
