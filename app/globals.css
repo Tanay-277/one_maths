@@ -38,12 +38,12 @@ textarea {
 }
 
 .MJX-TEX {
-  font-family: jetbrains mono !important;
+  font-family: 'jetbrains mono', monospace !important;
   font-size: 16px !important;
 }
 
 .TEX-I {
-  font-family: monospace !important;
+  font-family: 'jetbrains mono', monospace !important;
   font-size: 16px !important;
   margin-left: 2px !important;
 }
@@ -55,7 +55,7 @@ mjx-container [size="s"] {
 
 mjx-c {
   margin-right: 2px !important;
-  font-family: jetbrains mono !important;
+  font-family: 'jetbrains mono', monospace !important;
 }
 
 ::-webkit-scrollbar {
