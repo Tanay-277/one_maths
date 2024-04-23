@@ -176,7 +176,7 @@ const GaussJacobi = () => {
                             <input type="text" value={initialValues} onChange={handleInitialValues} />
                         </div>
                         <div>
-                            <label className="ml-2">Presicion (Number of Digits after decimal)</label><br />
+                            <label className="ml-2">Presicion (No of Digits after decimal)</label><br />
                             <input type="number" value={presicion} onChange={handlePresicion} />
                         </div>
                     </div>
