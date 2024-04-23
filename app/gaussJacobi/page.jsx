@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { MathJax, MathJaxContext } from "better-react-mathjax";
 import IterationBox from "@/components/IterationBox";
+import { motion } from "framer-motion";
 
 const GaussJacobi = () => {
 
@@ -19,6 +20,7 @@ const GaussJacobi = () => {
     const [error, setError] = useState("");
     const [result, setResult] = useState([]);
     const [showCalc, setShowCalc] = useState(true);
+    const [showSol, setShowSol] = useState(false);
 
     const handleNumOfEquations = (e) => {
         setNumOfEquations(e.target.value);
@@ -101,6 +103,7 @@ const GaussJacobi = () => {
     }
 
     const handleSubmit = () => {
+        setShowSol(true);
         setResult([]);
         setError("");
         setCoefficients([0, 0, 0, 0]);
@@ -135,8 +138,8 @@ const GaussJacobi = () => {
 
     return (
         <>
-            <div className="bg-black pt-4 pb-1 mx-10 rounded-b-[3rem]">
-                <h1 className="text-right text-6xl font-medium space text-[#ffffff8c] mr-6">Gauss Jacobi</h1>
+            <div className="main pt-4 pb-1 mx-10 rounded-b-[3rem]">
+                <h1 className="text-right text-6xl font-medium space text-[#ffffff8c] mr-6 mb-2">Gauss Jacobi</h1>
                 <div className="hero flex gap-6 px-6 py- my-2">
                     <div className="flex flex-col gap-4 w-1/2">
                         <div>
@@ -170,10 +173,9 @@ const GaussJacobi = () => {
                 </div>
                 <div className="flex w-full items-center justify-center mt-2 px-6 gap-6">
                     <button className="justify-center flex w-1/2 py-2 px-6 rounded-full border-[0.1px] border-[#ffffff1a] bg-[#00000054] hover:bg-[#00000012]" onClick={handleSubmit}>Solve</button>
-                    <button className="justify-center flex w-1/2 py-2 px-6 rounded-full border-[0.1px] border-[#ffffff1a] bg-[#00000054] hover:bg-[#e454d110]" onClick={handleReset}>Reset</button>
+                    <button className="justify-center flex w-1/2 py-2 px-6 rounded-full border-[0.1px] border-[#ffffff1a] bg-[#e454d110] hover:bg-[#00000054]" onClick={handleReset}>Reset</button>
                 </div>
-                {/* show a btn with a down caret sign  */}
-                <div className="flex w-full items-center justify-center my-2 px-6">
+                <div className="flex w-full items-center justify-center my-2 px-6" >
                     <button className="justify-center flex w-2/5 py-2 px-6 rounded-full  hover:bg-[#aad7f136]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 rotate-180">
                             <path strokeLinecap="round" strokeLinejoin="round" d="m4.5 5.25 7.5 7.5 7.5-7.5m-15 6 7.5 7.5 7.5-7.5" />
@@ -181,42 +183,45 @@ const GaussJacobi = () => {
                     </button>
                 </div>
             </div>
-            <div className="pt-4 my-4 mx-6">
-                <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
-                <div className="py-3 rounded-md text-lg">
-                    Given, <br />
-                    <MathJaxContext config={config}>
-                        {equations.map((equation, index) => (
-                            <MathJax key={index}>{equation}</MathJax>
-                        ))}
-                        <>
-                            <h3 className="mt-4">Therefore</h3>
-                            <MathJax className="mt-2">{"`" +
-                                `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
-                                "`"}
-                            </MathJax>
-                            <MathJax className="mt-2">{"`" +
-                                `y = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x - ${coefficients[1][2]}z}{${coefficients[1][1]}}` +
-                                "`"}
-                            </MathJax>
-                            <MathJax className="mt-2">{"`" +
-                                `z = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x - ${coefficients[2][1]}y}{${coefficients[2][2]}}` +
-                                "`"}
-                            </MathJax>
-                        </>
-                    </MathJaxContext>
+            {showSol &&
+                <div className="pt-4 my-4 mx-6">
+                    <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
+                    <div className="py-3 rounded-md text-lg">
+                        Given, <br />
+                        <MathJaxContext config={config}>
+                            {equations.map((equation, index) => (
+                                <MathJax key={index}>{equation}</MathJax>
+                            ))}
+                            <>
+                                <h3 className="mt-4">Therefore</h3>
+                                <MathJax className="mt-2">{"`" +
+                                    `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
+                                    "`"}
+                                </MathJax>
+                                <MathJax className="mt-2">{"`" +
+                                    `y = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x - ${coefficients[1][2]}z}{${coefficients[1][1]}}` +
+                                    "`"}
+                                </MathJax>
+                                <MathJax className="mt-2">{"`" +
+                                    `z = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x - ${coefficients[2][1]}y}{${coefficients[2][2]}}` +
+                                    "`"}
+                                </MathJax>
+                            </>
+                        </MathJaxContext>
+                    </div>
+                    <div className="py-3 rounded-md mb-3 text-lg">
+                        <MathJaxContext config={config}>
+                            <IterationBox
+                                coefficients={coefficients}
+                                initialValues={initialValues}
+                                numOfIterations={numOfIterations}
+                                presicion={presicion}
+                            />
+                        </MathJaxContext>
+                    </div>
                 </div>
-                <div className="py-3 rounded-md mb-3 text-lg">
-                    <MathJaxContext config={config}>
-                        <IterationBox
-                            coefficients={coefficients}
-                            initialValues={initialValues}
-                            numOfIterations={numOfIterations}
-                            presicion={presicion}
-                        />
-                    </MathJaxContext>
-                </div>
-            </div>
+            }
+
 
             {/* } */}
         </>

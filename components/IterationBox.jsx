@@ -7,6 +7,8 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
     // console.log(presicion);
 
     const iterations = [];
+    const iterationAnswers = [];
+
 
     for (let i = 0; i < numOfIterations; i++) {
         const newX = parseFloat(((coefficients[0][3] - coefficients[0][1] * y - coefficients[0][2] * z) / coefficients[0][0]).toFixed(presicion));
@@ -43,8 +45,10 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
         x = newX;
         y = newY;
         z = newZ;
-    }
+        iterationAnswers.push({ iteration: i + 1, x, y, z });
 
+    }
+    // console.log(iterations);
     return (
         <MathJax>
             <div>
@@ -55,27 +59,29 @@ const IterationBox = ({ coefficients, initialValues, numOfIterations, presicion 
                 </h3>
                 {iterations}
             </div>
-            <p className="bg-slate-800 p-2 px-4 rounded-full w-1/2">
+            <p className="bg-slate-800 p-2 px-4 rounded-full w-1/2 " style={{ margin: '20px 0' }}>
                 The solution is x = {x}, y = {y}, z = {z}
             </p>
-            <table className="table-auto border border-collapse border-gray-400 my-6">
+            <table className="table-auto border border-collapse border-gray-700 my-6 rounded-md">
                 <thead>
                     <tr className="bg-gray-800">
-                        <th className="border border-gray-400 px-4 py-2">Iteration</th>
-                        <th className="border border-gray-400 px-4 py-2">x</th>
-                        <th className="border border-gray-400 px-4 py-2">y</th>
-                        <th className="border border-gray-400 px-4 py-2">z</th>
+                        <th className="border border-gray-700 px-4 py-2">Iteration</th>
+                        <th className="border border-gray-700 px-4 py-2">x</th>
+                        <th className="border border-gray-700 px-4 py-2">y</th>
+                        <th className="border border-gray-700 px-4 py-2">z</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {iterations.map((iteration, index) => (
+                    {iterationAnswers.map((iteration, index) => (
                         <tr key={index} className="hover:bg-gray-900">
-                            <td className="border border-gray-400 px-4 py-2">{index + 1}</td>
-                            <td className="border border-gray-400 px-4 py-2">{iteration.x}</td>
-                            <td className="border border-gray-400 px-4 py-2">{iteration.y}</td>
-                            <td className="border border-gray-400 px-4 py-2">{iteration.z}</td>
+                            <td className="border border-gray-700 px-4 py-2 text-center">{iteration.iteration}</td>
+                            <td className="border border-gray-700 px-4 py-2 text-center">{iteration.x}</td>
+                            <td className="border border-gray-700 px-4 py-2 text-center">{iteration.y}</td>
+                            <td className="border border-gray-700 px-4 py-2 text-center">{iteration.z}</td>
                         </tr>
                     ))}
+
+
                 </tbody>
 
             </table>

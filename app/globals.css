@@ -16,11 +16,13 @@ html {
 .space {
   font-family: "Space grotesk", monospace;
 }
+
 body {
   min-height: 100vh;
   background: #060c16;
   color: #ffffffa9;
 }
+
 input,
 textarea {
   /* background: #000; */
@@ -39,6 +41,7 @@ textarea {
   font-family: monospace !important;
   font-size: 16px !important;
 }
+
 .TEX-I {
   font-family: monospace !important;
   font-size: 16px !important;
@@ -52,6 +55,7 @@ mjx-container [size="s"] {
 
 mjx-c {
   margin-right: 2px !important;
+  font-family: jetbrains mono !important;
 }
 
 ::-webkit-scrollbar {
@@ -69,4 +73,12 @@ mjx-c {
 button {
   transition: all 0.3s ease-in-out;
   cursor: pointer;
+}
+
+.main {
+
+  background: linear-gradient(135deg, #0c1622, #051b1e, #0b0520);
+  border: 0.1px solid #ffffff2b;
+  border-top: 0;
+
 }
