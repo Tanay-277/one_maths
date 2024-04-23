@@ -194,7 +194,7 @@ const GaussJacobi = () => {
                 </div>
             </div>
             {showSol &&
-                <div className="pt-4 my-4 mx-6">
+                <div className="pt-4 my-4 mx-6 overflow-x-auto">
                     <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
                     <div className="py-3 rounded-md text-lg">
                         Given, <br />
