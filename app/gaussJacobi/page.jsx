@@ -21,7 +21,7 @@ const GaussJacobi = () => {
     const [result, setResult] = useState([]);
     const [showCalc, setShowCalc] = useState(true);
     const [showSol, setShowSol] = useState(false);
-    const [mathJaxKey, setMathJaxKey] = useState(0);
+    const [renderMathJax, setRenderMathJax] = useState(false);
 
     const handleNumOfEquations = (e) => {
         setNumOfEquations(e.target.value);
@@ -138,7 +138,7 @@ const GaussJacobi = () => {
     }
 
     useEffect(() => {
-        setMathJaxKey(prevKey => prevKey + 1);
+        setRenderMathJax(true);
     }, [equations, coefficients, initialValues, numOfIterations, presicion]);
 
     return (
@@ -193,36 +193,40 @@ const GaussJacobi = () => {
                     <h3 className="text-3xl font-semibold mt-6 mb-4 text-white">Solution</h3>
                     <div className="py-3 rounded-md text-lg">
                         Given, <br />
-                        <MathJaxContext config={config} key={mathJaxKey}>
-                            {equations.map((equation, index) => (
-                                <MathJax key={index}>{equation}</MathJax>
-                            ))}
-                            <>
-                                <h3 className="mt-4">Therefore</h3>
-                                <MathJax className="mt-2">{"`" +
-                                    `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
-                                    "`"}
-                                </MathJax>
-                                <MathJax className="mt-2">{"`" +
-                                    `y = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x - ${coefficients[1][2]}z}{${coefficients[1][1]}}` +
-                                    "`"}
-                                </MathJax>
-                                <MathJax className="mt-2">{"`" +
-                                    `z = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x - ${coefficients[2][1]}y}{${coefficients[2][2]}}` +
-                                    "`"}
-                                </MathJax>
-                            </>
-                        </MathJaxContext>
+                        {renderMathJax && (
+                            <MathJaxContext config={config}>
+                                {equations.map((equation, index) => (
+                                    <MathJax key={index}>{equation}</MathJax>
+                                ))}
+                                <>
+                                    <h3 className="mt-4">Therefore</h3>
+                                    <MathJax className="mt-2">{"`" +
+                                        `x = \\frac{${coefficients[0][3]} - ${coefficients[0][1]}y - ${coefficients[0][2]}z}{${coefficients[0][0]}}` +
+                                        "`"}
+                                    </MathJax>
+                                    <MathJax className="mt-2">{"`" +
+                                        `y = \\frac{${coefficients[1][3]} - ${coefficients[1][0]}x - ${coefficients[1][2]}z}{${coefficients[1][1]}}` +
+                                        "`"}
+                                    </MathJax>
+                                    <MathJax className="mt-2">{"`" +
+                                        `z = \\frac{${coefficients[2][3]} - ${coefficients[2][0]}x - ${coefficients[2][1]}y}{${coefficients[2][2]}}` +
+                                        "`"}
+                                    </MathJax>
+                                </>
+                            </MathJaxContext>
+                        )}
                     </div>
                     <div className="py-3 rounded-md mb-3 text-lg">
-                        <MathJaxContext config={config} key={mathJaxKey}>
-                            <IterationBox
-                                coefficients={coefficients}
-                                initialValues={initialValues}
-                                numOfIterations={numOfIterations}
-                                presicion={presicion}
-                            />
-                        </MathJaxContext>
+                        {renderMathJax && (
+                            <MathJaxContext config={config}>
+                                <IterationBox
+                                    coefficients={coefficients}
+                                    initialValues={initialValues}
+                                    numOfIterations={numOfIterations}
+                                    presicion={presicion}
+                                />
+                            </MathJaxContext>
+                        )}
                     </div>
                 </div>
             }
